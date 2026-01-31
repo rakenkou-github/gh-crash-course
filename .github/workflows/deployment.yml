@@ -1,0 +1,44 @@
+name: Deployment Project
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: second-action-react-demo
+
+      - name: Run tests
+        run: npm test
+        working-directory: second-action-react-demo
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: second-action-react-demo
+
+      - name: Build project
+        run: npm run build
+        working-directory: second-action-react-demo
+
+      - name: Deploy to Server
+        run: echo "Deploying to server..."
+        # Add your deployment commands here
